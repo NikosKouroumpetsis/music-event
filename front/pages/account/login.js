@@ -6,14 +6,18 @@ import Layout from "@/components/Layout";
 import styles from "@/styles/AuthForm.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AuthContext from "@/context/AuthContext";
 
 export default function LoginPage() {
+  const { login, error } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  useEffect(() => error && toast.error(error));
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ email, password });
+    login({ email, password });
   };
   return (
     <Layout title="User Login">
@@ -29,7 +33,7 @@ export default function LoginPage() {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-              ></input>
+              />
             </div>
             <div>
               <label htmlFor="password">Password</label>
@@ -38,7 +42,7 @@ export default function LoginPage() {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-              ></input>
+              />
             </div>
             <input type="submit" value="Login" className="btn" />
           </form>

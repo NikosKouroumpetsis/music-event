@@ -1,0 +1,14 @@
+{
+  "kind": "collectionType",
+  "collectionName": "doctors",
+  "info": {
+    "name": "Doctor"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {}
+}

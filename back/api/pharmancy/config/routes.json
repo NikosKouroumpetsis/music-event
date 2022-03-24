@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/pharmancies",
+      "handler": "pharmancy.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/pharmancies/count",
+      "handler": "pharmancy.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/pharmancies/:id",
+      "handler": "pharmancy.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/pharmancies",
+      "handler": "pharmancy.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/pharmancies/:id",
+      "handler": "pharmancy.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/pharmancies/:id",
+      "handler": "pharmancy.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pharmancies",
+  "info": {
+    "name": "Pharmancy"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {}
+}

@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
 
   //Register user
 
-  const register = async (user) => {
+  const register = async () => {
     console.log(user);
   };
 
@@ -20,16 +20,16 @@ export const AuthProvider = ({ children }) => {
     const res = await fetch(`${NEXT_URL}/api/login`, {
       method: "POST",
       headers: {
-        "Conternt-Type": "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         identifier,
         password,
       }),
     });
+
     const data = await res.json();
 
-    console.log(data);
 
     if (res.ok) {
       setUser(data.user);

@@ -1,5 +1,6 @@
 "use strict";
 const { sanitizeEntity } = require("strapi-utils");
+const parseMultipart = require("strapi-utils/lib/parse-multipart");
 
 /**
  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#core-controllers)
@@ -7,6 +8,66 @@ const { sanitizeEntity } = require("strapi-utils");
  */
 
 module.exports = {
+  // Create event with linked user
+  async create(ctx) {
+    let entity;
+
+    if (ctx.is("multipart")) {
+      const { data, files } = parseMultipartData(ctx);
+      data.user = ctx.state.user.id;
+      entity = await strapi.services.events.create(data, { files });
+    } else {
+      ctx.request.body.author = ctx.state.user.id;
+      entity = await strapi.services.events.create(ctx.request.body);
+    }
+    return sanitizeEntity(entity, { model: strapi.models.events });
+  },
+
+  // Update user event
+  async update(ctx) {
+    const { id } = ctx.params;
+
+    let entity;
+
+    const [events] = await strapi.services.events.find({
+      id: ctx.params.id,
+      "user.id": ctx.state.user.id,
+    });
+
+    if (!events) {
+      return ctx.unauthorized(`You can't update this entry`);
+    }
+
+    if (ctx.is("multipart")) {
+      const { data, files } = parseMultipartData(ctx);
+      entity = await strapi.services.events.update({ id }, data, {
+        files,
+      });
+    } else {
+      entity = await strapi.services.events.update({ id }, ctx.request.body);
+    }
+
+    return sanitizeEntity(entity, { model: strapi.models.events });
+  },
+
+  // Delete a user  event
+  // Delete a user event
+  async delete(ctx) {
+    const { id } = ctx.params;
+
+    const [events] = await strapi.services.events.find({
+      id: ctx.params.id,
+      "user.id": ctx.state.user.id,
+    });
+
+    if (!events) {
+      return ctx.unauthorized(`You can't update this entry`);
+    }
+
+    const entity = await strapi.services.events.delete({ id });
+    return sanitizeEntity(entity, { model: strapi.models.events });
+  },
+
   //  Get logged in users
   async me(ctx) {
     const user = ctx.state.user;

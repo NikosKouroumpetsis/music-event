@@ -4,10 +4,10 @@ import { FaPencilAlt, FaTimes } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
 import Layout from "@/components/Layout";
-// import EventMap from '@/components/EventMap'
 import { API_URL } from "@/config/index";
 import styles from "@/styles/Event.module.css";
 import { useRouter } from "next/router";
+import EventMap from "@/components/EventMap";
 
 export async function getStaticPaths() {
   const res = await fetch(`http://127.0.0.1:1337/events`);
@@ -59,6 +59,7 @@ export default function EventPage({ evt }) {
         <p>{evt.description}</p>
         <h3>Venue: {evt.venue}</h3>
         <p>{evt.address}</p>
+        <EventMap evt={evt} />
 
         {/* <EventMap evt={evt} /> */}
 

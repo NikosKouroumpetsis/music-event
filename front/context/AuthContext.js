@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { NEXT_URL } from "@/config/index";
+import { API_URL, NEXT_URL } from "@/config/index";
 
 const AuthContext = createContext();
 
@@ -14,10 +14,25 @@ export const AuthProvider = ({ children }) => {
 
   //Register user
 
-  const register = async () => {
-    console.log(user);
-  };
+  const register = async (user) => {
+    const res = await fetch(`${NEXT_URL}/api/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
 
+    const data = await res.json();
+
+    if (res.ok) {
+      setUser(data.user);
+      router.push("/account/dashboard");
+    } else {
+      setError(data.message);
+      setError(null);
+    }
+  };
   //Login user
 
   const login = async ({ email: identifier, password }) => {
@@ -44,9 +59,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   //Logout user
-
   const logout = async () => {
-    console.log("log out");
+    const res = await fetch(`${NEXT_URL}/api/logout`, {
+      method: "POST",
+    });
+
+    if (res.ok) {
+      setUser(null);
+      router.push("/");
+    }
   };
 
   // check if user is logged in

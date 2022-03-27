@@ -29,14 +29,12 @@ export async function getStaticProps({ params: { slug } }) {
   return {
     props: {
       evt: events[0],
-      google_key: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY,
-      mapbox_token: process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN,
     },
     revalidate: 1,
   };
 }
 
-export default function EventPage({ evt, google_key, mapbox_token }) {
+export default function EventPage({ evt }) {
   return (
     <Layout>
       <div className={styles.event}>
@@ -61,7 +59,7 @@ export default function EventPage({ evt, google_key, mapbox_token }) {
         <p>{evt.description}</p>
         <h3>Venue: {evt.venue}</h3>
         <p>{evt.address}</p>
-        <EventMap evt={evt} googlekey={google_key} />
+        <EventMap evt={evt} />
 
         <Link href="/events">
           <a className={styles.back}>{"<"} Go Back</a>

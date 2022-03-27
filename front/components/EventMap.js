@@ -5,7 +5,7 @@ import ReactMapGl, { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Geocode from "react-geocode";
 
-export default function EventMap({ evt }) {
+export default function EventMap({ evt, googlekey, mapbox_token }) {
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -34,9 +34,20 @@ export default function EventMap({ evt }) {
     );
   }, []);
 
-  Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_API_KEY);
+  Geocode.setApiKey(googlekey);
   if (loading) return false;
 
   console.log(lat, lng);
-  return <div>EMAP</div>;
+
+  return (
+    <ReactMapGl
+      {...viewState}
+      mapboxApiAccessToken="pk.eyJ1Ijoibmlrb3Nrb3Vyb3UiLCJhIjoiY2wxOWJhMjBmMTd6MTNpczF3ejV5YmdpdCJ9.vvVbE0-YbC_LbaO1fq2COg"
+      onViewportChange={(vp) => setViewState(vp)}
+    >
+      <Marker key={evt.id} latitude={lat} longitude={lng}>
+        aaa
+      </Marker>
+    </ReactMapGl>
+  );
 }

@@ -33,7 +33,7 @@ export default function EventMap({ evt, googlekey }) {
     );
   }, []);
 
-  Geocode.setApiKey(googlekey);
+  Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY);
   if (loading) return false;
 
   return (

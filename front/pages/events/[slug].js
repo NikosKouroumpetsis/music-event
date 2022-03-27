@@ -61,11 +61,7 @@ export default function EventPage({ evt, google_key, mapbox_token }) {
         <p>{evt.description}</p>
         <h3>Venue: {evt.venue}</h3>
         <p>{evt.address}</p>
-        <EventMap
-          evt={evt}
-          googlekey={google_key}
-          mapbox_token={mapbox_token}
-        />
+        <EventMap evt={evt} googlekey={google_key} />
 
         <Link href="/events">
           <a className={styles.back}>{"<"} Go Back</a>

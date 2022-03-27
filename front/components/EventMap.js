@@ -1,19 +1,19 @@
 import React from "react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import ReactMapGl, { Marker } from "react-map-gl";
+import ReactMapGL, { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Geocode from "react-geocode";
 
-export default function EventMap({ evt, googlekey, mapbox_token }) {
+export default function EventMap({ evt, googlekey }) {
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [viewState, setViewState] = useState({
+  const [viewPort, setViewport] = useState({
     latitude: -73.935242,
     longitude: 40.712772,
     width: "100%",
-    height: "500px",
+    height: "200px",
     zoom: 12,
   });
 
@@ -22,10 +22,9 @@ export default function EventMap({ evt, googlekey, mapbox_token }) {
     Geocode.fromAddress(evt.address).then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
-        console.log(lat, lng);
         setLat(lat);
         setLng(lng);
-        setViewState({ ...viewState, latitude: lat, longitude: lng });
+        setViewport({ ...viewPort, latitude: lat, longitude: lng });
         setLoading(false);
       },
       (error) => {
@@ -37,17 +36,17 @@ export default function EventMap({ evt, googlekey, mapbox_token }) {
   Geocode.setApiKey(googlekey);
   if (loading) return false;
 
-  console.log(lat, lng);
-
   return (
-    <ReactMapGl
-      {...viewState}
-      mapboxApiAccessToken="pk.eyJ1Ijoibmlrb3Nrb3Vyb3UiLCJhIjoiY2wxOWJhMjBmMTd6MTNpczF3ejV5YmdpdCJ9.vvVbE0-YbC_LbaO1fq2COg"
-      onViewportChange={(vp) => setViewState(vp)}
+    <ReactMapGL
+      mapboxAccessToken={process.env.mapbox_key}
+      onViewportChange={(viewPort) => setViewport(viewPort)}
+      {...viewPort}
+      style={{ width: 600, height: 200 }}
+      mapStyle="mapbox://styles/nikoskourou/cl19fw7uk00fy15pbsr10ca2h"
     >
       <Marker key={evt.id} latitude={lat} longitude={lng}>
-        aaa
+        ss
       </Marker>
-    </ReactMapGl>
+    </ReactMapGL>
   );
 }

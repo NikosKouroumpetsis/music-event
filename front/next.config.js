@@ -7,6 +7,10 @@ const nextConfig = {
   images: {
     domains: ["res.cloudinary.com"],
   },
+  env: {
+    mapbox_key:
+      "pk.eyJ1Ijoibmlrb3Nrb3Vyb3UiLCJhIjoiY2wxOWJhMjBmMTd6MTNpczF3ejV5YmdpdCJ9.vvVbE0-YbC_LbaO1fq2COg",
+  },
 };
 
 module.exports = nextConfig;
